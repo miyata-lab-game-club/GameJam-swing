@@ -6,6 +6,7 @@ public class playerManager : MonoBehaviour
 {
     private Rigidbody2D rb;
     private bool isJump;
+    public float playerSpeed = 200;
     public GameObject gameClearPanel;
     public GameObject gameOverPanel;
     public GameObject arrowPrefab;  // 矢のPrefab
@@ -36,7 +37,7 @@ public class playerManager : MonoBehaviour
     void FixedUpdate()
     {
         float x = Input.GetAxisRaw("Horizontal");
-        rb.velocity += new Vector2(x, 0) * 8f * Time.deltaTime;
+        rb.velocity += new Vector2(x, 0) * playerSpeed * Time.deltaTime;
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -60,7 +61,7 @@ void ShootArrow()
     Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
 
     // プレイヤーの右方向と上方向の合成方向に力を加える
-    Vector2 force = (transform.up - transform.right).normalized * arrowSpeed;
+    Vector2 force = (transform.up + transform.right).normalized * arrowSpeed;
     rb.velocity = force;
 }
 }
