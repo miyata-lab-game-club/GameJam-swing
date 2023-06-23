@@ -1982,6 +1982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd7e32004fcf6240b40a6e44507577d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSpeed: 8
   gameClearPanel: {fileID: 1351301775}
   gameOverPanel: {fileID: 2095859096}
   arrowPrefab: {fileID: 6108779567164540850, guid: 225e373aea85c9f4bab39be0afcf31a6, type: 3}
