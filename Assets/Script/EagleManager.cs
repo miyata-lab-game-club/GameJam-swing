@@ -71,7 +71,7 @@ public class EagleManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("FallRockPoint")) //ポイントに来たら岩を降らせる
+        if (collision.gameObject.CompareTag("FallPoint")) //ポイントに来たら岩を降らせる
         {
             FallLocks(collision.gameObject);
         }

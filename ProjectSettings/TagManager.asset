@@ -9,8 +9,8 @@ TagManager:
   - Ground
   - Arrow
   - Boss
-  - FallRockPoint
-  - Rock
+  - EnemyAttack
+  - FallPoint
   layers:
   - Default
   - TransparentFX
@@ -22,9 +22,9 @@ TagManager:
   - Rock
   - Collision Detection
   - Arrow
-  - 
-  - 
-  - 
+  - Missle
+  - FirePoint
+  - EnemyAttack
   - 
   - 
   - 
