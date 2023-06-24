@@ -11,6 +11,7 @@ TagManager:
   - Boss
   - FallRockPoint
   - Rock
+  - water
   layers:
   - Default
   - TransparentFX
