@@ -13,6 +13,10 @@ public class NewplayerManager : MonoBehaviour
     public GameObject arrowPrefab;  // 矢のPrefab
     public float arrowSpeed = 10f;  // 矢の速度
 
+
+    // 追加：鍵を持っているかどうか
+    public bool hasKey = false;  
+
     public enum PlayerDir{
         left,
         right,
@@ -105,7 +109,13 @@ public class NewplayerManager : MonoBehaviour
             gameOverPanel.SetActive(true);
             Destroy(this.gameObject);
         }
-    }
+
+         // 追加：鍵を拾ったとき、hasKeyをTrueにする
+          if (collider.gameObject.CompareTag("Key")){ 
+            hasKey = true;
+            Destroy(collider.gameObject);
+        }
+        }
 
 void ShootArrow()
 {
