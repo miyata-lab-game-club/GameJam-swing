@@ -12,6 +12,7 @@ TagManager:
   - FallRockPoint
   - Rock
   - water
+  - wall
   layers:
   - Default
   - TransparentFX
