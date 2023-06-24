@@ -7,6 +7,10 @@ TagManager:
   - Goal
   - Enemy
   - Ground
+  - Arrow
+  - Boss
+  - FallRockPoint
+  - Rock
   layers:
   - Default
   - TransparentFX
@@ -14,10 +18,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Boss
+  - Rock
+  - Collision Detection
+  - Arrow
   - 
   - 
   - 
