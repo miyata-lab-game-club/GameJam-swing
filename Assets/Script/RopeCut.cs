@@ -10,6 +10,8 @@ public class RopeCut : MonoBehaviour
         {
             Destroy(hinge); // ヒンジジョイントを削除
             Destroy(collision.gameObject); // 矢を消す
+
+            Destroy(this.gameObject); // ロープ（このスクリプトがアタッチされているオブジェクト）を消す
         }
     }
 }
