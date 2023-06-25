@@ -9,11 +9,16 @@ TagManager:
   - Ground
   - Arrow
   - Boss
+<<<<<<< HEAD
   - FallRockPoint
   - Rock
   - water
   - wall
   - Key
+=======
+  - EnemyAttack
+  - FallPoint
+>>>>>>> 02333720d38c79c1b6b9d8268f4413bcc7830949
   layers:
   - Default
   - TransparentFX
@@ -25,9 +30,9 @@ TagManager:
   - Rock
   - Collision Detection
   - Arrow
-  - 
-  - 
-  - 
+  - Missle
+  - FirePoint
+  - EnemyAttack
   - 
   - 
   - 

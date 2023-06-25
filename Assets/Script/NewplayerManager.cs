@@ -105,7 +105,7 @@ public class NewplayerManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider){
         
-        if (collider.gameObject.CompareTag("Rock")){
+        if (collider.gameObject.CompareTag("EnemyAttack")){
             gameOverPanel.SetActive(true);
             Destroy(this.gameObject);
         }
@@ -126,11 +126,11 @@ void ShootArrow()
 
     if(playerDir == PlayerDir.left){
 
-        // プレイヤーの左方向と上方向の合成方向に力を加える
+        // プレイヤーの左方向と上方向のに力を加える
         Vector2 force = new Vector2(-4.5f,3.0f).normalized * arrowSpeed;
         rb.AddForce(force, ForceMode2D.Impulse);
     }else if(playerDir == PlayerDir.right){
-        // プレイヤーの右方向と上方向の合成方向に力を加える
+        // プレイヤーの右方向と上方向に力を加える
         Vector2 force = new Vector2(4.5f,3.0f).normalized * arrowSpeed;
         rb.AddForce(force, ForceMode2D.Impulse);
 
