@@ -38,4 +38,8 @@ public class ArrowManager : MonoBehaviour
         Destroy(this.gameObject);
         }
     }
+
+    void OnBecameInvisible() {
+        Destroy (this.gameObject);
+    }
 }
