@@ -1310,6 +1310,7 @@ MonoBehaviour:
   basicGranedeFallProbability: 0.8
   deathEffect: {fileID: 4558613420728300979, guid: 8bf31deb113a8cf45afc6017002504df, type: 3}
   gameClearPanel: {fileID: 202001814}
+  deathSound: {fileID: 8300000, guid: 514f6744013967c4b894056ac2a1d4dd, type: 3}
 --- !u!1001 &519465525
 PrefabInstance:
   m_ObjectHideFlags: 0

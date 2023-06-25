@@ -3138,6 +3138,7 @@ MonoBehaviour:
   deathEffect: {fileID: 4558613420728300979, guid: 8bf31deb113a8cf45afc6017002504df, type: 3}
   gameClearPanel: {fileID: 1938849290}
   shotProbability: 0.75
+  deathSound: {fileID: 8300000, guid: 514f6744013967c4b894056ac2a1d4dd, type: 3}
 --- !u!1 &470386019
 GameObject:
   m_ObjectHideFlags: 0

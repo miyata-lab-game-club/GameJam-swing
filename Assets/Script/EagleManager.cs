@@ -15,6 +15,7 @@ public class EagleManager : MonoBehaviour
     [SerializeField] private GameObject deathEffect; //死のエフェクト
     [SerializeField] private Animator eagleAnimator;
     [SerializeField] private GameObject gameClearPanel;
+    [SerializeField] private AudioClip deathSound;
 
     private Rigidbody2D rb;
     private enum MoveDir //向いている方向enum
@@ -104,11 +105,14 @@ public class EagleManager : MonoBehaviour
         canMove = false;
         GameObject[] deathEffects = new GameObject[4];
 
+        
+        AudioSource.PlayClipAtPoint(deathSound,new Vector3(0, 0, -10));
+
         Destroy(this.gameObject,2);
 
         eagleAnimator.SetBool("isDeath",true);
 
-        //デスエフェクトを表示
+        //デスエフェクトを表示，サウンドも
         for( int i = 0 ; i < 4; i++){
             GameObject deathEff  = Instantiate(deathEffect,this.transform.position,Quaternion.identity);
             deathEffects[i]  = deathEff;
@@ -121,6 +125,8 @@ public class EagleManager : MonoBehaviour
     }
 
     void OnDestroy(){
+        if(gameClearPanel != null){
         gameClearPanel.SetActive(true);
+        }
     }
 }

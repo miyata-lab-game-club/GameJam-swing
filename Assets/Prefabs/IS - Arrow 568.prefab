@@ -141,6 +141,7 @@ MonoBehaviour:
   playerDir: 0
   arrowDamage: 10
   breakEffect: {fileID: 2056155122956098745, guid: 7d66223deaedf9d4e8b1a37a72c35ff6, type: 3}
+  breakSound: {fileID: 8300000, guid: 514f6744013967c4b894056ac2a1d4dd, type: 3}
 --- !u!82 &3361944854546300436
 AudioSource:
   m_ObjectHideFlags: 0

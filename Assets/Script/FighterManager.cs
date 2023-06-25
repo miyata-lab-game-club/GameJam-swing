@@ -21,6 +21,8 @@ public class FighterManager : MonoBehaviour
     [SerializeField] private float basicGranedeFallProbability = 0.5f; //グレネードを落とす確率
     [SerializeField] private GameObject deathEffect; //デスエフェクト
     [SerializeField] private GameObject gameClearPanel; //ゲームクリアパネル
+    [SerializeField] private AudioClip deathSound;
+
 
     private enum MoveDir //向いている方向enum
     {
@@ -61,6 +63,7 @@ public class FighterManager : MonoBehaviour
             if (Time.time >= nextExplosionTime) //一転時間ごとにデスエフェクトを生成
             {
                 DestroyEffect();
+                AudioSource.PlayClipAtPoint(deathSound,new Vector3(0,0,-5));
                 nextExplosionTime = Time.time + 0.1f;  
             }
             

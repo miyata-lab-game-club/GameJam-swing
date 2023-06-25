@@ -8,8 +8,7 @@ public class ArrowManager : MonoBehaviour
     public NewplayerManager.PlayerDir playerDir;
     public float arrowDamage = 10f;
     [SerializeField] private GameObject breakEffect;
-
-
+    [SerializeField] private AudioClip breakSound;
 
     // Start is called before the first frame update
     
@@ -39,6 +38,7 @@ public class ArrowManager : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider){
         if(collider.gameObject.tag != "Player"){
         GameObject eff = Instantiate(breakEffect,transform.position,Quaternion.identity);
+        AudioSource.PlayClipAtPoint(breakSound,new Vector3(0, 0, -5));
         Destroy(this.gameObject);
         }
     }
