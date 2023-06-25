@@ -9,9 +9,13 @@ public class ArrowManager : MonoBehaviour
     public float arrowDamage = 10f;
     [SerializeField] private GameObject breakEffect;
 
+
+
     // Start is called before the first frame update
+    
     void onEnable()
     {
+
         playerDir = newplayerManager.playerDir;
 
         if(playerDir == NewplayerManager.PlayerDir.left){
@@ -34,7 +38,7 @@ public class ArrowManager : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider){
         if(collider.gameObject.tag != "Player"){
-        GameObject eff = Instantiate(breakEffect,collider.transform.position,Quaternion.identity);
+        GameObject eff = Instantiate(breakEffect,transform.position,Quaternion.identity);
         Destroy(this.gameObject);
         }
     }
