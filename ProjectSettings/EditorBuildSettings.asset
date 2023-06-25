@@ -5,7 +5,37 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/GaneStart.unity
+    guid: cbcfbca5528144947b7902a65dd2b60c
+  - enabled: 1
+    path: Assets/Scenes/BossStage2.unity
+    guid: c34d7525c2c9a52439eab570dfe49974
+  - enabled: 1
+    path: Assets/Scenes/BossStage1.unity
+    guid: ae4048b1655a7fd4a9dbd6ea2be76b16
+  - enabled: 1
+    path: Assets/Scenes/BossStage3.unity
+    guid: a61b7beada786054aaac5be7196afd46
+  - enabled: 1
+    path: Assets/Scenes/MapStage1(sample).unity
+    guid: 619c8a45d30fa5f46a8c38729aa732d7
+  - enabled: 1
+    path: Assets/Scenes/MapStage2.unity
+    guid: 4062b60171bd30041a946c6038b9b5e2
+  - enabled: 1
+    path: Assets/Scenes/MapStage3.unity
+    guid: 754c4f3df58c01c46ada9834d7e801e3
+  - enabled: 1
+    path: Assets/Scenes/NewGame.unity
+    guid: 9f53cd8af30be0649ac79651410bdd5e
+  - enabled: 1
+    path: Assets/Scenes/MapStage1.unity
+    guid: bff2369663ef5414cac1ade67a3e4b45
+  - enabled: 1
+    path: Assets/Scenes/choiseScene.unity
+    guid: a579cecb14c0ddb4e895ebbdc40c5b44
   m_configObjects: {}
