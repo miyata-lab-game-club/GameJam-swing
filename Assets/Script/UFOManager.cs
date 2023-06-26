@@ -16,6 +16,7 @@ public class UFOManager : MonoBehaviour
     [SerializeField] private GameObject deathEffect;
     [SerializeField] private GameObject gameClearPanel;
     [SerializeField] private float shotProbability = 0.6f;
+    [SerializeField] private AudioClip deathSound;
 
     private Rigidbody2D rb;
     private int currentIndex = 1; // 現在の目標位置のインデックス
@@ -49,6 +50,7 @@ public class UFOManager : MonoBehaviour
             if (Time.time >= nextExplosionTime) //一転時間ごとにデスエフェクトを生成
             {
                 DestroyEffect();
+                AudioSource.PlayClipAtPoint(deathSound,new Vector3(0,0,-5));
                 nextExplosionTime = Time.time + 0.1f;
             }
 

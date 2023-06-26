@@ -4,18 +4,18 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Goal
-  - Enemy
   - Ground
   - Arrow
+  - EnemyAttack
   - Boss
-  - FallRockPoint
-  - Rock
   - water
   - wall
-  - Key
-  - EnemyAttack
+  - Enemy
+  - Goal
+  - FallRockPoint
   - FallPoint
+  - Key
+  - Rock
   layers:
   - Default
   - TransparentFX
@@ -23,13 +23,13 @@ TagManager:
   - 
   - Water
   - UI
-  - Boss
-  - Rock
-  - Collision Detection
-  - Arrow
-  - Missle
-  - FirePoint
-  - EnemyAttack
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
