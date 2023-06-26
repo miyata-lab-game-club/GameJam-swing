@@ -15,6 +15,7 @@ TagManager:
   - FallRockPoint
   - FallPoint
   - Key
+  - Rock
   layers:
   - Default
   - TransparentFX
