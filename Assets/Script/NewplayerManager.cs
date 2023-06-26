@@ -53,6 +53,13 @@ public class NewplayerManager : MonoBehaviour
             ShootArrow();
         }
         //Debug.Log("isJump: " + isJump);
+
+        //追加：ユーザが落ちたらゲームオーバーになる
+        if (this.transform.position.y <= -10 ){
+            gameOverPanel.SetActive(true);
+        }
+
+
     }
 
     void FixedUpdate()
@@ -115,7 +122,17 @@ public class NewplayerManager : MonoBehaviour
             hasKey = true;
             Destroy(collider.gameObject);
         }
+        // 追加：敵と当たったら死ぬ
+                if (collider.gameObject.CompareTag("Enemy") || collider.gameObject.CompareTag("Fire")){
+            gameOverPanel.SetActive(true);
+            Destroy(this.gameObject);
         }
+
+
+        }
+
+
+
 
 void ShootArrow()
 {

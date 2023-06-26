@@ -8,6 +8,7 @@ TagManager:
   - Arrow
   - EnemyAttack
   - Boss
+<<<<<<< HEAD
   - water
   - wall
   - Enemy
@@ -16,6 +17,16 @@ TagManager:
   - FallPoint
   - Key
   - Rock
+=======
+  - EnemyAttack
+  - FallPoint
+  - FallRockPoint
+  - water
+  - wall
+  - Target
+  - Key
+  - Fire
+>>>>>>> f74ced33d9b5311084bf51d5292d2353903f4326
   layers:
   - Default
   - TransparentFX
