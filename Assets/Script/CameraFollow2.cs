@@ -21,7 +21,9 @@ public class CameraFollow2 : MonoBehaviour
 
     void MoveCamera()
     {
+        if (playerObj != null){
         //横方向だけ追従
         transform.position = new Vector3(playerTransform.position.x, transform.position.y, transform.position.z);
+    }
     }
 }

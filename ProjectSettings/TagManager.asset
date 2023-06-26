@@ -16,6 +16,7 @@ TagManager:
   - wall
   - Target
   - Key
+  - Fire
   layers:
   - Default
   - TransparentFX
