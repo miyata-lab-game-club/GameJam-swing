@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UFOManager : MonoBehaviour
 {
@@ -43,23 +44,21 @@ public class UFOManager : MonoBehaviour
         if (nowHP <= 0 && isDeath == false) //死んだとき
         {
             isDeath = true;
-            DestroyEvent();
+            StartCoroutine(DestroyEvent());
         }
         else if (nowHP <= 0 && isDeath == true) //死んでデストロイされるまで
         {
             if (Time.time >= nextExplosionTime) //一転時間ごとにデスエフェクトを生成
             {
                 DestroyEffect();
-                AudioSource.PlayClipAtPoint(deathSound,new Vector3(0,0,-5));
+                AudioSource.PlayClipAtPoint(deathSound, new Vector3(0, 0, -5));
                 nextExplosionTime = Time.time + 0.1f;
             }
-
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
         if (collision.gameObject.CompareTag("Arrow")) //矢に当たったらダメージ
         {
             ArrowManager arrowManager = collision.GetComponent<ArrowManager>();
@@ -84,43 +83,51 @@ public class UFOManager : MonoBehaviour
 
             Vector2 force = (playerPos - myPos).normalized * shotSpeed;
             rb.AddForce(force, ForceMode2D.Impulse);
-        }else{
+        }
+        else
+        {
             shotProbability = 0.9f;
             UFOSpeed += 2;
 
             GameObject[] shots = new GameObject[5];
             Rigidbody2D[] rbs = new Rigidbody2D[5];
 
-            for(int i = 0; i < 5; i++){
+            for (int i = 0; i < 5; i++)
+            {
                 shots[i] = Instantiate(energyShot, this.transform.position, Quaternion.identity);
                 rbs[i] = shots[i].GetComponent<Rigidbody2D>();
             }
 
-            Vector2 force1 = new Vector2(-1,-1).normalized * shotSpeed;
-            rbs[0].AddForce(force1,ForceMode2D.Impulse);
-            Vector2 force2 = new Vector2(0,-1).normalized * shotSpeed;
-            rbs[1].AddForce(force2,ForceMode2D.Impulse);
-            Vector2 force3 = new Vector2(1,-1).normalized * shotSpeed;
-            rbs[2].AddForce(force3,ForceMode2D.Impulse);
-            Vector2 force4 = new Vector2(3,-1).normalized * shotSpeed;
-            rbs[3].AddForce(force4,ForceMode2D.Impulse);
-            Vector2 force5 = new Vector2(-3,-1).normalized * shotSpeed;
-            rbs[4].AddForce(force5,ForceMode2D.Impulse);
+            Vector2 force1 = new Vector2(-1, -1).normalized * shotSpeed;
+            rbs[0].AddForce(force1, ForceMode2D.Impulse);
+            Vector2 force2 = new Vector2(0, -1).normalized * shotSpeed;
+            rbs[1].AddForce(force2, ForceMode2D.Impulse);
+            Vector2 force3 = new Vector2(1, -1).normalized * shotSpeed;
+            rbs[2].AddForce(force3, ForceMode2D.Impulse);
+            Vector2 force4 = new Vector2(3, -1).normalized * shotSpeed;
+            rbs[3].AddForce(force4, ForceMode2D.Impulse);
+            Vector2 force5 = new Vector2(-3, -1).normalized * shotSpeed;
+            rbs[4].AddForce(force5, ForceMode2D.Impulse);
         }
-
     }
 
-
-    private void DestroyEvent()//死イベント
+    private IEnumerator DestroyEvent()//死イベント
     {
         rb.gravityScale = 1;
-        Destroy(this.gameObject, 2);//2秒後にデストロイ
+        //Destroy(this.gameObject, 2);//2秒後にデストロイ
 
+        yield return new WaitForSeconds(2);
+        this.GetComponent<SpriteRenderer>().enabled = false;
+
+        if (gameClearPanel != null)
+        {
+            gameClearPanel.SetActive(true);
+        }
+        StartCoroutine(loadNextScene());
     }
 
     private void DestroyEffect() //自分の周りにランダムでエフェクト生成
     {
-
         //デスエフェクトを表示
 
         GameObject deathEff = Instantiate(deathEffect, this.transform.position, Quaternion.identity);
@@ -128,9 +135,9 @@ public class UFOManager : MonoBehaviour
         Vector2 effPos = deathEff.transform.position;
         effPos += new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, 3f));
         deathEff.transform.position = effPos;
-
     }
 
+    /*
     void OnDestroy()
     {
         if (gameClearPanel != null)
@@ -138,6 +145,7 @@ public class UFOManager : MonoBehaviour
             gameClearPanel.SetActive(true);
         }
     }
+    */
 
     private Vector2 GetRandomTargetPosition()
     {
@@ -182,10 +190,8 @@ public class UFOManager : MonoBehaviour
 
             // インターバル待ち
             yield return new WaitForSeconds(moveInterval);
-
         }
     }
-
 
     private IEnumerator MoveToTargetPosition(Vector2 targetPosition)
     {
@@ -211,5 +217,19 @@ public class UFOManager : MonoBehaviour
 
         // 移動が終わったら目標位置に正確に配置
         transform.position = targetPosition;
+    }
+
+    private IEnumerator loadNextScene()
+    {
+        yield return new WaitForSeconds(2);
+        GameManager gameManager = GameManager.Instance;
+        if (gameManager.gameMode == GameMode.Story)
+        {
+            SceneManager.LoadScene("Title");
+        }
+        else
+        {
+            SceneManager.LoadScene("SelectStage");
+        }
     }
 }

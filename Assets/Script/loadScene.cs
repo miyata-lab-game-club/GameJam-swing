@@ -6,14 +6,14 @@ public class loadScene : MonoBehaviour
 {
     public Button yourButton;
 
-    void Start()
+    private void Start()
     {
         Button btn = yourButton.GetComponent<Button>();
         btn.onClick.AddListener(TaskOnClick);
     }
 
-    void TaskOnClick()
+    private void TaskOnClick()
     {
-        SceneManager.LoadScene("NewGame");
+        SceneManager.LoadScene("GameSelect");
     }
 }

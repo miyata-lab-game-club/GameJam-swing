@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EagleManager : MonoBehaviour
 {
@@ -18,14 +19,16 @@ public class EagleManager : MonoBehaviour
     [SerializeField] private AudioClip deathSound;
 
     private Rigidbody2D rb;
+
     private enum MoveDir //向いている方向enum
     {
         left,
         right,
     }
+
     private MoveDir moveDir = MoveDir.left; //今向いている方向
 
-    void Start()
+    private void Start()
     {
         transform.position = new Vector2(10, maxY);
         rb = GetComponent<Rigidbody2D>();
@@ -58,14 +61,15 @@ public class EagleManager : MonoBehaviour
                 }
             }
         }
-
     }
 
     private void Update()
     {
         if (myHP <= 0 && isDeath == false)
         {
-            DestroyEvent();
+            Debug.Log("aaa");
+            //DestroyEvent();
+            StartCoroutine("DestroyEvent");
             isDeath = true;
         }
     }
@@ -85,7 +89,6 @@ public class EagleManager : MonoBehaviour
         }
     }
 
-
     private void FlipCharacter()
     {
         // キャラクターの向きを反転
@@ -100,33 +103,54 @@ public class EagleManager : MonoBehaviour
         GameObject rock = Instantiate(Rock, rk.transform.position, Quaternion.identity);
     }
 
-    private void DestroyEvent()
+    private IEnumerator DestroyEvent()
     {
         canMove = false;
         GameObject[] deathEffects = new GameObject[4];
 
-        
-        AudioSource.PlayClipAtPoint(deathSound,new Vector3(0, 0, -10));
+        AudioSource.PlayClipAtPoint(deathSound, new Vector3(0, 0, -10));
 
-        Destroy(this.gameObject,2);
+        //Destroy(this.gameObject, 2);
 
-        eagleAnimator.SetBool("isDeath",true);
+        eagleAnimator.SetBool("isDeath", true);
 
         //デスエフェクトを表示，サウンドも
-        for( int i = 0 ; i < 4; i++){
-            GameObject deathEff  = Instantiate(deathEffect,this.transform.position,Quaternion.identity);
-            deathEffects[i]  = deathEff;
+        for (int i = 0; i < 4; i++)
+        {
+            GameObject deathEff = Instantiate(deathEffect, this.transform.position, Quaternion.identity);
+            deathEffects[i] = deathEff;
             Vector2 effPos = deathEffects[i].transform.position;
             effPos += new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
             deathEffects[i].transform.position = effPos;
         }
 
         rb.gravityScale = 1;
+        yield return new WaitForSeconds(2);
+        this.GetComponent<SpriteRenderer>().enabled = false;
+
+        if (gameClearPanel != null)
+        {
+            gameClearPanel.SetActive(true);
+        }
+        StartCoroutine(loadNextScene());
     }
 
-    void OnDestroy(){
-        if(gameClearPanel != null){
-        gameClearPanel.SetActive(true);
+    private void OnDestroy()
+    {
+    }
+
+    private IEnumerator loadNextScene()
+    {
+        GameManager gameManager = GameManager.Instance;
+        if (gameManager.gameMode == GameMode.Story)
+        {
+            yield return new WaitForSeconds(2);
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(++currentSceneIndex);
+        }
+        else
+        {
+            SceneManager.LoadScene("SelectStage");
         }
     }
 }

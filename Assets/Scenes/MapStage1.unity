@@ -518,6 +518,7 @@ MonoBehaviour:
   deathEffect: {fileID: 4558613420728300979, guid: 8bf31deb113a8cf45afc6017002504df, type: 3}
   eagleAnimator: {fileID: 811298597}
   gameClearPanel: {fileID: 251615689}
+  deathSound: {fileID: 0}
 --- !u!50 &811298595
 Rigidbody2D:
   serializedVersion: 4

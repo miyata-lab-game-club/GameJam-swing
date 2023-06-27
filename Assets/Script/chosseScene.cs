@@ -11,9 +11,9 @@ public class chosseScene : MonoBehaviour
     public Button stage3Button;
     public Button boss3Button;
 
-    void Start()
+    private void Start()
     {
-        stage1Button.onClick.AddListener(() => LoadScene("MapStage1"));
+        //stage1Button.onClick.AddListener(() => LoadScene("MapStage1"));
         boss1Button.onClick.AddListener(() => LoadScene("BossStage1"));
         stage2Button.onClick.AddListener(() => LoadScene("MapStage2"));
         boss2Button.onClick.AddListener(() => LoadScene("BossStage2"));
@@ -21,7 +21,7 @@ public class chosseScene : MonoBehaviour
         boss3Button.onClick.AddListener(() => LoadScene("BossStage3"));
     }
 
-    void LoadScene(string sceneName)
+    private void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }

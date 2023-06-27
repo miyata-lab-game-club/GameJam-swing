@@ -7,15 +7,15 @@ public class LoadScene : MonoBehaviour
     public Button newGameButton;  // 初めからのボタン
     public Button continueButton;  // 続きからのボタン
 
-    void Start()
+    private void Start()
     {
         // 各ボタンにリスナーを追加
-        newGameButton.onClick.AddListener(() => LoadSceneByName("MapStage1"));
-        continueButton.onClick.AddListener(() => LoadSceneByName("choiseScene"));
+        newGameButton.onClick.AddListener(() => LoadSceneByName("BossStage1"));
+        continueButton.onClick.AddListener(() => LoadSceneByName("selectStage"));
     }
 
     // シーン名を引数にとるメソッド
-    void LoadSceneByName(string sceneName)
+    private void LoadSceneByName(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }

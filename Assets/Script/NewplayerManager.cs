@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NewplayerManager : MonoBehaviour
 {
@@ -13,36 +14,37 @@ public class NewplayerManager : MonoBehaviour
     public GameObject arrowPrefab;  // 矢のPrefab
     public float arrowSpeed = 10f;  // 矢の速度
 
-
     // 追加：鍵を持っているかどうか
-    public bool hasKey = false;  
+    public bool hasKey = false;
 
-    public enum PlayerDir{
+    public enum PlayerDir
+    {
         left,
         right,
-    } 
+    }
 
     public PlayerDir playerDir;
 
-    [SerializeField] Animator archerAnimator;
+    [SerializeField] private Animator archerAnimator;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         archerAnimator = GetComponent<Animator>();
         playerDir = PlayerDir.right;
     }
 
-    void Awake(){
+    private void Awake()
+    {
         canMove = true;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && !isJump)
-        {            
+        {
             isJump = true;
             archerAnimator.SetBool("isJump", true);
             rb.AddForce(new Vector2(0, 7), ForceMode2D.Impulse);
@@ -55,16 +57,16 @@ public class NewplayerManager : MonoBehaviour
         //Debug.Log("isJump: " + isJump);
 
         //追加：ユーザが落ちたらゲームオーバーになる
-        if (this.transform.position.y <= -10 ){
+        if (this.transform.position.y <= -10)
+        {
             gameOverPanel.SetActive(true);
         }
-
-
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        if(canMove == false){
+        if (canMove == false)
+        {
             return;
         }
 
@@ -72,12 +74,14 @@ public class NewplayerManager : MonoBehaviour
 
         Vector2 playerScale = this.gameObject.transform.localScale;
 
-        if( ( playerScale.x > 0 && x < 0 ) )
+        if ((playerScale.x > 0 && x < 0))
         {
             playerDir = PlayerDir.left;
             playerScale.x *= -1;
             this.gameObject.transform.localScale = playerScale;
-        }else if(playerScale.x < 0 && x > 0){
+        }
+        else if (playerScale.x < 0 && x > 0)
+        {
             playerDir = PlayerDir.right;
             playerScale.x *= -1;
             this.gameObject.transform.localScale = playerScale;
@@ -85,73 +89,91 @@ public class NewplayerManager : MonoBehaviour
 
         if (x != 0)
         {
-            archerAnimator.SetBool("isMove",true);
+            archerAnimator.SetBool("isMove", true);
             rb.velocity += new Vector2(x, 0) * playerSpeed * Time.deltaTime;
         }
         else
         {
             archerAnimator.SetBool("isMove", false);
         }
-
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.CompareTag("Ground")){
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
             isJump = false;
             archerAnimator.SetBool("isJump", false);
-
         }
-        if (collision.gameObject.CompareTag("Goal")){
+        if (collision.gameObject.CompareTag("Goal"))
+        {
+            Debug.Log("Goal!");
             gameClearPanel.SetActive(true);
+            StartCoroutine(loadNextScene());
         }
-        if (collision.gameObject.CompareTag("Enemy")){
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
             gameOverPanel.SetActive(true);
             Destroy(this.gameObject);
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collider){
-        
-        if (collider.gameObject.CompareTag("EnemyAttack")){
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.CompareTag("EnemyAttack"))
+        {
             gameOverPanel.SetActive(true);
             Destroy(this.gameObject);
         }
 
-         // 追加：鍵を拾ったとき、hasKeyをTrueにする
-          if (collider.gameObject.CompareTag("Key")){ 
+        // 追加：鍵を拾ったとき、hasKeyをTrueにする
+        if (collider.gameObject.CompareTag("Key"))
+        {
             hasKey = true;
             Destroy(collider.gameObject);
         }
         // 追加：敵と当たったら死ぬ
-                if (collider.gameObject.CompareTag("Enemy") || collider.gameObject.CompareTag("Fire")){
+        if (collider.gameObject.CompareTag("Enemy") || collider.gameObject.CompareTag("Fire"))
+        {
             gameOverPanel.SetActive(true);
             Destroy(this.gameObject);
         }
-
-
-        }
-
-
-
-
-void ShootArrow()
-{
-    // 矢のインスタンスを生成
-    GameObject arrow = Instantiate(arrowPrefab, transform.position, Quaternion.identity);
-    // Rigidbodyを取得
-    Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
-
-    if(playerDir == PlayerDir.left){
-
-        // プレイヤーの左方向と上方向のに力を加える
-        Vector2 force = new Vector2(-4.5f,3.0f).normalized * arrowSpeed;
-        rb.AddForce(force, ForceMode2D.Impulse);
-    }else if(playerDir == PlayerDir.right){
-        // プレイヤーの右方向と上方向に力を加える
-        Vector2 force = new Vector2(4.5f,3.0f).normalized * arrowSpeed;
-        rb.AddForce(force, ForceMode2D.Impulse);
-
     }
-    
-}
+
+    private void ShootArrow()
+    {
+        // 矢のインスタンスを生成
+        GameObject arrow = Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+        // Rigidbodyを取得
+        Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
+
+        if (playerDir == PlayerDir.left)
+        {
+            // プレイヤーの左方向と上方向のに力を加える
+            Vector2 force = new Vector2(-4.5f, 3.0f).normalized * arrowSpeed;
+            rb.AddForce(force, ForceMode2D.Impulse);
+        }
+        else if (playerDir == PlayerDir.right)
+        {
+            // プレイヤーの右方向と上方向に力を加える
+            Vector2 force = new Vector2(4.5f, 3.0f).normalized * arrowSpeed;
+            rb.AddForce(force, ForceMode2D.Impulse);
+        }
+    }
+
+    private IEnumerator loadNextScene()
+    {
+        yield return new WaitForSeconds(2);
+        GameManager gameManager = GameManager.Instance;
+        Debug.Log(gameManager.gameMode);
+        if (gameManager.gameMode == GameMode.Story)
+        {
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(++currentSceneIndex);
+        }
+        else
+        {
+            SceneManager.LoadScene("SelectStage");
+        }
+    }
 }

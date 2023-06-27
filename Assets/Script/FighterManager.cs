@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FighterManager : MonoBehaviour
 {
@@ -23,7 +24,6 @@ public class FighterManager : MonoBehaviour
     [SerializeField] private GameObject gameClearPanel; //ゲームクリアパネル
     [SerializeField] private AudioClip deathSound;
 
-
     private enum MoveDir //向いている方向enum
     {
         left,
@@ -31,7 +31,7 @@ public class FighterManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         nowHP = maxHP;
         rb = GetComponent<Rigidbody2D>();
@@ -51,22 +51,21 @@ public class FighterManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (nowHP <= 0 && isDeath == false) //死んだとき
         {
             isDeath = true;
-            DestroyEvent();
+            StartCoroutine(DestroyEvent());
         }
         else if (nowHP <= 0 && isDeath == true) //死んでデストロイされるまで
         {
             if (Time.time >= nextExplosionTime) //一転時間ごとにデスエフェクトを生成
             {
                 DestroyEffect();
-                AudioSource.PlayClipAtPoint(deathSound,new Vector3(0,0,-5));
-                nextExplosionTime = Time.time + 0.1f;  
+                AudioSource.PlayClipAtPoint(deathSound, new Vector3(0, 0, -5));
+                nextExplosionTime = Time.time + 0.1f;
             }
-            
         }
     }
 
@@ -81,7 +80,9 @@ public class FighterManager : MonoBehaviour
                     FallGranede(collision.gameObject);
                 }
             }
-        }else{
+        }
+        else
+        {
             if (collision.gameObject.CompareTag("FallPoint")) //ポイントに来たら確率で岩を降らせる
             {
                 if (Random.value < 1.0)  // 100%の確立で処理を実行
@@ -153,17 +154,23 @@ public class FighterManager : MonoBehaviour
         }
     }
 
-    private void DestroyEvent()//死イベント
+    private IEnumerator DestroyEvent()//死イベント
     {
-
-        Destroy(this.gameObject, 2);//2秒後にデストロイ
+        //Destroy(this.gameObject, 2);//2秒後にデストロイ
 
         rb.gravityScale = 1;
+        yield return new WaitForSeconds(2);
+        this.GetComponent<SpriteRenderer>().enabled = false;
+
+        if (gameClearPanel != null)
+        {
+            gameClearPanel.SetActive(true);
+        }
+        StartCoroutine(loadNextScene());
     }
 
     private void DestroyEffect() //自分の周りにランダムでエフェクト生成
     {
-
         //デスエフェクトを表示
 
         GameObject deathEff = Instantiate(deathEffect, this.transform.position, Quaternion.identity);
@@ -171,17 +178,17 @@ public class FighterManager : MonoBehaviour
         Vector2 effPos = deathEff.transform.position;
         effPos += new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, 3f));
         deathEff.transform.position = effPos;
-
     }
 
+    /*
     void OnDestroy()
     {
         if(gameClearPanel != null){
         gameClearPanel.SetActive(true);
         }
-    }
+    }*/
 
-    IEnumerator FireMissilesRepeatedly()//ミサイルを一定時間ごとに発射するコルーチン
+    private IEnumerator FireMissilesRepeatedly()//ミサイルを一定時間ごとに発射するコルーチン
     {
         while (true)
         {
@@ -195,6 +202,21 @@ public class FighterManager : MonoBehaviour
             fireMissile(firePoint, fighterScale);  // ミサイルを発射
 
             yield return new WaitForSeconds(missileInterval);  // 数秒待機
+        }
+    }
+
+    private IEnumerator loadNextScene()
+    {
+        yield return new WaitForSeconds(2);
+        GameManager gameManager = GameManager.Instance;
+        if (gameManager.gameMode == GameMode.Story)
+        {
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(++currentSceneIndex);
+        }
+        else
+        {
+            SceneManager.LoadScene("SelectStage");
         }
     }
 }
