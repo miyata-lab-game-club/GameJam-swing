@@ -113,6 +113,7 @@ public class NewplayerManager : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            Debug.Log("敵に当たった");
             gameOverPanel.SetActive(true);
             Destroy(this.gameObject);
         }
