@@ -3399,7 +3399,7 @@ MonoBehaviour:
   - {fileID: 638729189}
   moveInterval: 1
   UFOSpeed: 11
-  maxHP: 10
+  maxHP: 250
   nowHP: 0
   energyShot: {fileID: 7342534326870361262, guid: 814bc9305227a044d8d9a06ab5ed9675, type: 3}
   shotSpeed: 10
